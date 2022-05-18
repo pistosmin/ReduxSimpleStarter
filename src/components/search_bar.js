@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // const Component = React.Component;
 
 // const SearchBar = () => {
@@ -9,7 +9,7 @@ class SearchBar extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { term: 'Starting Value' };
+        this.state = { term: '' };
     }
 
 

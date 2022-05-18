@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import YTSearch from 'youtube-api-search';
-import SearchBar from './components/search_bar';
-import VideoList from './components/video_list';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import YTSearch from "youtube-api-search";
+import SearchBar from "./components/search_bar";
+import VideoList from "./components/video_list";
+import VideoDetail from "./components/video_detail";
 
 const API_KEY = 'AIzaSyBB17EWI3M4nH1TIe7wdFkMHLnJJlBUcLE';
 
@@ -33,14 +34,19 @@ class App extends Component {
     super(props);
 
     this.state = {
-      videos: []
+      videos: [],
+      selectedVideo: null
     };
 
     // YTSearch({key: API_KEY, term: 'surfboards'}, function(data) {
-    YTSearch({key: API_KEY, term: 'surfboards'}, videos => {
+    YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
       // console.log(data);
       // this.setState({ videos: videos});
-      this.setState({ videos });
+      // this.setState({ videos });
+      this.setState({ 
+        videos: videos,
+        selectedVideo: videos[0]
+      });
     });
   }
 
@@ -48,10 +54,13 @@ class App extends Component {
     return (
       <div>
         <SearchBar />
-        <VideoList videos={this.state.videos} />
+        <VideoDetail video={this.state.selectedVideo} />
+        <VideoList
+          onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+          videos={this.state.videos} />
       </div>
-    )
-  }
+    );
+  };
 }
 
 // Take this component's generated HTML and put it on the page (in the DOM)

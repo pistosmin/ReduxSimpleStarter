@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from "lodash";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import YTSearch from "youtube-api-search";
@@ -6,7 +6,7 @@ import SearchBar from "./components/search_bar";
 import VideoList from "./components/video_list";
 import VideoDetail from "./components/video_detail";
 
-const API_KEY = 'AIzaSyBB17EWI3M4nH1TIe7wdFkMHLnJJlBUcLE';
+const API_KEY = 'AIzaSyC6l-cMhc4fyTH5v5xy0bEWxfMNof_8s_E';
 
 // import { Provider } from 'react-redux';
 // import { createStore, applyMiddleware } from 'redux';
@@ -39,8 +39,7 @@ class App extends Component {
       selectedVideo: null
     };
 
-    this.videoSearch('surfboards');
-
+    this.videoSearch("surfboards");
   }
 
   // YTSearch({key: API_KEY, term: 'surfboards'}, function(data) {
@@ -48,8 +47,8 @@ class App extends Component {
       // this.setState({ videos: videos});
       // this.setState({ videos });
   videoSearch(term) {
-    YTSearch({key: API_KEY, term: term}, (videos) => {
-      this.setState({ 
+    YTSearch({ key: API_KEY, term: term }, videos => {
+      this.setState({
         videos: videos,
         selectedVideo: videos[0]
       });
@@ -57,16 +56,21 @@ class App extends Component {
   }
 
   render() {
+    const videoSearch = _.debounce(term => {
+      this.videoSearch(term);
+    }, 300);
+
     return (
       <div>
-        <SearchBar onSearchTermChange={term => this.videoSearch(term)} />
+        <SearchBar onSearchTermChange={videoSearch} />
         <VideoDetail video={this.state.selectedVideo} />
         <VideoList
-          onVideoSelect={selectedVideo => this.setState({selectedVideo})}
-          videos={this.state.videos} />
+          onVideoSelect={selectedVideo => this.setState({ selectedVideo })}
+          videos={this.state.videos}
+        />
       </div>
     );
-  };
+  }
 }
 
 // Take this component's generated HTML and put it on the page (in the DOM)

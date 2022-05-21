@@ -58,7 +58,7 @@ class App extends Component {
   render() {
     const videoSearch = _.debounce(term => {
       this.videoSearch(term);
-    }, 300);
+    }, 500);
 
     return (
       <div>

@@ -5,11 +5,15 @@ import { bindActionCreators } from 'redux';
 
 // export default class BookList extends Component {
 class BookList extends Component {
-
     renderList() {
         return this.props.books.map((book) => {
             return (
-                <li key={book.title} className="list-group-item"> { book.title }</li>
+                <li 
+                    key={book.title} 
+                    onClick={() => this.props.selectBook(book)}
+                    className="list-group-item"> 
+                    { book.title }
+                </li>
             );
         });
     }
@@ -35,4 +39,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ selectBook: selectBook } , dispatch);
 }
 
-export default connect(mapStateToProps)(BookList);
+export default connect(mapStateToProps, mapDispatchToProps)(BookList);
